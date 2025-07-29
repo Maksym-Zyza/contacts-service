@@ -9,9 +9,9 @@ username = os.getenv("DB_USER")
 password = os.getenv("DB_PASSWORD")
 db_name = os.getenv("DB_NAME")
 db_port = os.getenv("DB_PORT")
-domain = os.getenv("DOMAIN")
+host = os.getenv("DB_HOST")
 
-url = f"postgresql://{username}:{password}@{domain}:{db_port}/{db_name}"
+url = f"postgresql://{username}:{password}@{host}:{db_port}/{db_name}"
 
 engine = create_engine(url)
 
