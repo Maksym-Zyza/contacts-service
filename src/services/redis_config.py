@@ -1,8 +1,11 @@
 import os
 import redis
-from dotenv import load_dotenv
 
-load_dotenv()
+if os.getenv("ENV", "dev") == "dev":
+    from dotenv import load_dotenv
+
+    load_dotenv()
+
 
 def get_redis_client() -> redis.Redis:
     env = os.getenv("ENV", "dev")
@@ -11,7 +14,7 @@ def get_redis_client() -> redis.Redis:
         return redis.Redis(
             host=os.getenv("REDIS_HOST"),
             port=int(os.getenv("REDIS_PORT", 6379)),
-            decode_responses=False, 
+            decode_responses=False,
         )
     else:
         return redis.Redis(

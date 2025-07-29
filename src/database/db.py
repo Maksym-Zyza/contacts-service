@@ -1,9 +1,11 @@
 import os
 from sqlalchemy import create_engine
-from dotenv import load_dotenv
 from sqlalchemy.orm import sessionmaker
 
-load_dotenv()
+if os.getenv("ENV", "dev") == "dev":
+    from dotenv import load_dotenv
+
+    load_dotenv()
 
 username = os.getenv("DB_USER")
 password = os.getenv("DB_PASSWORD")
@@ -19,15 +21,6 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 
 def get_db():
-    """
-    Функція генератор для отримання сесії бази даних.
-
-    Використовується як залежність у FastAPI для отримання сесії
-    SQLAlchemy. Після завершення роботи сесія закривається.
-
-    Yields:
-        Session: Сесія бази даних SQLAlchemy.
-    """
     db = SessionLocal()
     try:
         yield db
